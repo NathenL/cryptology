@@ -4,22 +4,12 @@
   "description": "Cryptanalysis Tool Experiment by: Nathen Lyman",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nathen Lyman",
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
     "pug": "^2.0.0-beta6"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sirthorfinn/cryptology.git"
-  },
-  "bugs": {
-    "url": "https://github.com/sirthorfinn/cryptology/issues"
-  },
-  "homepage": "https://github.com/sirthorfinn/cryptology#readme"
+  }
 }
