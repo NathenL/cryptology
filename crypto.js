@@ -12,7 +12,8 @@ console.log("------------------\n\n".blue.bgGreen);
 cipher
   .version('0.0.1')
   .option('-D, --Decrypt', 'Decrypt a Cipher. Depends on chosen Cipher Type.')
-  .option('-E, --Encrypt', 'Encrypt a Cipher. Depends on chosen Cipher Type. (Requires --key)')
+  .option('-E, --Encrypt',
+    'Encrypt a Cipher. Depends on chosen Cipher Type. (Requires --key)')
   .option('-A, --Analyze', 'Analyze a Cipher. Depends on chosen Cipher Type.')
   .option('-s, --simple_substitution [value]', 'Simple Substitution')
   .option('-F, --Frequency_analyze [value]', 'Analyze letter frequency.')
@@ -25,50 +26,48 @@ cipher
   .option('-v, --vigenere [value]', 'Vigenere Cipher')
   .parse(process.argv);
 
-  var E = cipher.Encrypt;
-  var D = cipher.Decrypt;
-  var A = cipher.Analyze;
+var E = cipher.Encrypt;
+var D = cipher.Decrypt;
+var A = cipher.Analyze;
 
-// if ((cipher.Encrypt && !cipher.Decrypt && !cipher.Analyze) ||
-//     (!cipher.Encrypt && cipher.Decrypt && !cipher.Analyze) ||
-//     (!cipher.Encrypt && !cipher.Decrypt && cipher.Analyze)){
-//   console.log('(ERROR) You must supply a Substitution Alphabet as a KEY.'.red);
-// }
-// else {
+if ((cipher.Encrypt && !cipher.Decrypt && !cipher.Analyze) ||
+  (!cipher.Encrypt && cipher.Decrypt && !cipher.Analyze) ||
+  (!cipher.Encrypt && !cipher.Decrypt && cipher.Analyze)) {
+
   // Simple Substitution
   if (cipher.simple_substitution) {
     console.log('Simple Substitution...');
 
-    if(cipher.Encrypt) {
+    if (cipher.Encrypt) {
       console.log('Method: ' + 'Encryption'.yellow);
-      if (!cipher.Key){
-        console.log('(ERROR) You must supply a Substitution Alphabet as a KEY.'.red);
-      }
-      else{
+      if (!cipher.Key) {
+        console.log('(ERROR) You must supply a Substitution Alphabet as a KEY.'
+          .red);
+      } else {
         //"QRCEJLAUDOXWFKVTIZNGMHPYBS"
         console.log("Substitution Alphabet: " + cipher.Key.toUpperCase().yellow);
-        console.log("Plain-Text:  \"" + cipher.simple_substitution.yellow + "\"");
-        var CT = simple.encrypt(cipher.Key,cipher.simple_substitution); //Encrypt
+        console.log("Plain-Text:  \"" + cipher.simple_substitution.yellow +
+          "\"");
+        var CT = simple.encrypt(cipher.Key, cipher.simple_substitution); //Encrypt
         console.log("Cipher-Text: \"" + CT.yellow + "\"");
       }
     }
 
-    if (cipher.Decrypt){
+    if (cipher.Decrypt) {
       console.log('- Decryption'.yellow);
-      if (!cipher.Key){
+      if (!cipher.Key) {
         console.log('No Key supplied, analyzing instead.');
         console.log('Method: ' + 'Frequency Analysis'.yellow);
         var data = simple.analyze(cipher.simple_substitution);
 
-        for(var i = 0; i < 26; i++){
+        for (var i = 0; i < 26; i++) {
           letter = String.fromCharCode(97 + i);
           count = data[letter];
 
-          console.log(letter + "-".yellow + Array(count+1).join("_".bgYellow.black) + " " + count );
+          console.log(letter + "-".yellow + Array(count + 1).join("_".bgYellow.black) +
+            " " + count);
         }
-      }
-
-      else{
+      } else {
 
       }
     }
@@ -76,19 +75,19 @@ cipher
   }
   // --------------
 
-  if (cipher.multiplicative){
-    if (cipher.Encrypt){
+  if (cipher.multiplicative) {
+    if (cipher.Encrypt) {
 
-    }
+    } else if (cipher.Decrypt) {
 
-    else if (cipher.Decrypt){
-
-    }
-
-    else{
-      console.log("(ERROR) Please choose to either --Encrypt, --Decrypt, or --Analyze.".red);
+    } else {
+      console.log(
+        "(ERROR) Please choose to either --Encrypt, --Decrypt, or --Analyze."
+        .red);
     }
   }
-// }
+} else {
+  console.log('(ERROR) You must supply a Substitution Alphabet as a KEY.'.red);
+}
 console.log("\n\n------- END ------".blue.bgGreen);
 //END
