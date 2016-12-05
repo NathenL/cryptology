@@ -1,7 +1,7 @@
 var cipher = require('commander');
 var colors = require('colors');
-const simple = require('./cipher_logic/simple_sub.js');
-const multi = require('./cipher_logic/multiplicative.js');
+const Simple = require('./cipher_logic/simple_sub.js');
+const Multi = require('./cipher_logic/multiplicative.js');
 
 console.log("------------------".blue.bgGreen);
 console.log("Cryptology Tool   ".blue.bgGreen);
@@ -15,6 +15,7 @@ cipher
   .option('-E, --Encrypt',
     'Encrypt a Cipher. Depends on chosen Cipher Type. (Requires --key)')
   .option('-A, --Analyze', 'Analyze a Cipher. Depends on chosen Cipher Type.')
+  .option('-B, -Brute_Force', 'Brute for a cipher if allowed.')
   .option('-s, --simple_substitution [value]', 'Simple Substitution')
   .option('-F, --Frequency_analyze [value]', 'Analyze letter frequency.')
   .option('-m, --multiplicative [value]', 'Multiplicative Cipher')
@@ -29,103 +30,28 @@ cipher
 var E = cipher.Encrypt;
 var D = cipher.Decrypt;
 var A = cipher.Analyze;
+var B = cipher.Brute_Force;
 
 if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A))
 {
+  var mode = (E && !D && !A) ? 'e' : ((!E && D && !A) ? 'd' : 'a');
+
   // Simple Substitution
   if (cipher.simple_substitution)
   {
-    console.log('Simple Substitution...');
-
-    if (!cipher.Key && cipher.Decrypt)
-    {
-      console.log('No Key supplied, analyzing instead.');
-      cipher.Decrypt = false;
-      cipher.Analyze = true;
-    }
-
-    if (cipher.Encrypt)
-    {
-      console.log('Method: ' + 'Encryption'.yellow);
-      if (!cipher.Key)
-      {
-        console.log('(ERROR) You must supply a Substitution Alphabet as a KEY.'
-          .red);
-      }
-      else
-      {
-        //"QRCEJLAUDOXWFKVTIZNGMHPYBS"
-        console.log("Substitution Alphabet: " + cipher.Key.toUpperCase().yellow);
-        console.log("Plain-Text:  \"" + cipher.simple_substitution.yellow +
-          "\"");
-        var CT = simple.encrypt(cipher.Key, cipher.simple_substitution); //Encrypt
-        console.log("Cipher-Text: \"" + CT.yellow + "\"");
-      }
-    }
-    // Need to finish
-    else if (cipher.Decrypt)
-    {
-      console.log('- Decryption'.yellow);
-    }
-    else if (cipher.Analyze)
-    {
-      console.log('Method: ' + 'Frequency Analysis'.yellow);
-      var data = simple.analyze(cipher.simple_substitution);
-
-      for (var i = 0; i < 26; i++)
-      {
-        letter = String.fromCharCode(97 + i);
-        count = data[letter];
-
-        console.log(letter + "-".yellow + Array(count + 1).join("_".bgYellow.black) +
-          " " + count);
-      }
-    }
-
+    var simple = new Simple(cipher.Key,cipher.simple_substitution,mode);
+    simple.doConsole();
   }
   // --------------
 
   if (cipher.multiplicative)
   {
-    console.log('Multiplicative...');
-    if (cipher.Encrypt)
-    {
-      console.log('Method: ' + 'Encryption'.yellow);
-      if (!cipher.Key || [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25].indexOf(
-          cipher.Key % 26) == -1)
-      {
-        console.log(
-          '(ERROR) You must supply a valid multiplicative Key, MOD 26 (1,3,5,7,9,11,15,17,19,21,23,25).'
-          .red);
-      }
-      else
-      {
-        console.log("Key: " + cipher.Key.yellow);
-        console.log("Plain-Text:  \"" + cipher.multiplicative.yellow + "\"");
-        var CT = multi.encrypt(cipher.Key, cipher.multiplicative);
-        console.log("Cipher-Text: \"" + CT.yellow + "\"");
-      }
+    if (cipher.Brute_Force){
+      mode = 'b';
     }
-    if (cipher.Decrypt)
-    {
-      console.log('Method: ' + 'Decryption'.yellow);
-      console.log("Key: " + ((cipher.Key) ? cipher.Key.yellow : "N/A".yellow));
-      console.log("Cipher-Text:  \"" + cipher.multiplicative.toUpperCase().yellow +
-        "\"");
-      var pt = multi.decrypt(cipher.Key, cipher.multiplicative);
-      if (pt instanceof Array)
-      {
-        console.log("Plain-Texts:");
-        pt.forEach(function(text, index)
-        {
-          console.log("" + text.yellow + "\n");
-        });
-      }
-      else
-      {
-        console.log("Plain-Text: \"" + pt.yellow + "\"");
-      }
-    }
+    var multi = new Multi(cipher.Key,cipher.multiplicative,mode);
+    multi.doConsole();
+    //multi.testInput();
   }
 }
 else
