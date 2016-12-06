@@ -6,10 +6,11 @@
 
 var express = require('express');
 var app = express();
+var path = require('path');
 
-app.get('/', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!'});
-});
+var PORT = 3000;
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/t1',express.static('public/templates/text_page'));
 app.use('/t2',express.static('public/templates/article'));
@@ -20,6 +21,7 @@ app.post('/test-page', function(req, res) {
         color = req.body.color;
 });
 
-app.listen(3000, function () {
-  console.log('Listening on port 3000 ...');
+
+app.listen(PORT, function () {
+  console.log('Verre Webpage - listening on port: ', PORT);
 });
