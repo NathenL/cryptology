@@ -16,22 +16,25 @@ var mode;
  * 'd' = Decrypt
  * 'b' = Brute Force
  */
-function Multiplicative(k = "",t = "",m = 'b'){
+function Multiplicative(k = "", t = "", m = 'b')
+{
   this.key = k;
   this.text = t;
   this.mode = m;
 }
 
-Multiplicative.prototype.testInput = function(){
-  console.log("\nKEY: "+this.key);
-  console.log("TEXT "+this.text);
-  console.log("MODE: "+this.mode+"\n");
+Multiplicative.prototype.testInput = function()
+{
+  console.log("\nKEY: " + this.key);
+  console.log("TEXT " + this.text);
+  console.log("MODE: " + this.mode + "\n");
 }
 
 /**
  * Used only when running the Cryptology program via the console
  */
-Multiplicative.prototype.doConsole = function(){
+Multiplicative.prototype.doConsole = function()
+{
   console.log('Multiplicative...');
   if (this.mode == 'e')
   {
@@ -71,7 +74,8 @@ Multiplicative.prototype.doConsole = function(){
       console.log("Plain-Text: \"" + pt.yellow + "\"");
     }
   }
-  if (this.mode == 'b'){
+  if (this.mode == 'b')
+  {
     // BRUTE FORCE
   }
 }
@@ -80,7 +84,8 @@ Multiplicative.prototype.doConsole = function(){
  * [encrypt description]
  * @return {[type]} [description]
  */
-Multiplicative.prototype.encrypt = function(){
+Multiplicative.prototype.encrypt = function()
+{
   text = this.text.toLowerCase().split('');
 
   var cipher = "";
@@ -113,7 +118,8 @@ Multiplicative.prototype.encrypt = function(){
  * [decrypt description]
  * @return {[type]} [description]
  */
-Multiplicative.prototype.decrypt = function(){
+Multiplicative.prototype.decrypt = function()
+{
 
   var inverse = [1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25];
   cipher = this.text.toLowerCase().split('');
@@ -159,7 +165,8 @@ Multiplicative.prototype.decrypt = function(){
  * [brute description]
  * @return {[type]} [description]
  */
-Multiplicative.prototype.brute = function(){
+Multiplicative.prototype.brute = function()
+{
   var inverse = [1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25];
   var brute = [];
 
@@ -189,114 +196,3 @@ Multiplicative.prototype.brute = function(){
   });
   return brute;
 }
-
-// exports.encrypt = (k, t) => encrypt(k, t);
-//
-// function encrypt(key, text)
-// {
-//   text = text.toLowerCase().split('');
-//
-//   var cipher = "";
-//   text.forEach(function(letter, index)
-//   {
-//     if (letter.charCodeAt(0) < 97)
-//     {
-//       cipher += letter;
-//     }
-//     else
-//     {
-//       // 98 instead of 97 so a = 1 not 0
-//       num = ((letter.charCodeAt(0) - 96) * key) % 26;
-//       if (num == 0)
-//       {
-//         cipher += 'z';
-//       }
-//       else
-//       {
-//         cipher += String.fromCharCode(96 + num);
-//       }
-//     }
-//   });
-//   return cipher.toUpperCase();
-// }
-//
-// exports.analyze = (c) => analyze(c);
-//
-// function analyze(c)
-// {
-//
-// }
-//
-// exports.decrypt = (k, c) => decrypt(k, c);
-//
-// function decrypt(key, cipher)
-// {
-//   var inverse = [1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25];
-//   cipher = cipher.toLowerCase().split('');
-//
-//   if (!key > 0 || inverse.indexOf(Number(key)) == -1)
-//   {
-//     console.log("No valid inverse key provided, useing brute force...");
-//     return brute(cipher);
-//   }
-//
-//   else
-//   {
-//     var text = "";
-//     cipher.forEach(function(letter, index)
-//     {
-//       if (letter.charCodeAt(0) < 97)
-//       {
-//         text += letter;
-//       }
-//       else
-//       {
-//         num = ((letter.charCodeAt(0) - 96) * key) % 26;
-//         if (num == 0)
-//         {
-//           text += 'z';
-//         }
-//         else
-//         {
-//           text += String.fromCharCode(96 + num);
-//         }
-//
-//       }
-//     });
-//     return text;
-//   }
-// }
-//
-// exports.brute = (c) => brute(c);
-// // BRUTE FORCE
-// function brute(cipher)
-// {
-//   var inverse = [1, 9, 21, 15, 3, 19, 7, 23, 11, 5, 17, 25];
-//   var brute = [];
-//
-//   inverse.forEach(function(inverse, index)
-//   {
-//     text = "Inverse " + inverse + ": \n";
-//     cipher.forEach(function(letter, index)
-//     {
-//       if (letter.charCodeAt(0) < 97)
-//       {
-//         text += letter;
-//       }
-//       else
-//       {
-//         num = ((letter.charCodeAt(0) - 96) * inverse) % 26;
-//         if (num == 0)
-//         {
-//           text += 'z';
-//         }
-//         else
-//         {
-//           text += String.fromCharCode(96 + num);
-//         }
-//       }
-//     });
-//     brute.push(text.toLowerCase());
-//   });
-//   return brute;
-// }

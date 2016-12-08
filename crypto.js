@@ -1,7 +1,17 @@
+/*
+For one of the following ciphers, create software that given key and plaintext will encipher and
+that given key and ciphertext will decipher.
+ADFGX.
+Autokey extended by ciphertext.
+Columnar transposition -- rectangle is filled by padding if necessary.
+Two- or four-square Playfair.
+*/
+
 var cipher = require('commander');
 var colors = require('colors');
 const Simple = require('./cipher_logic/simple_sub.js');
 const Multi = require('./cipher_logic/multiplicative.js');
+const ADFGX = require('./cipher_logic/ADFGX.js');
 
 console.log("------------------".blue.bgGreen);
 console.log("Cryptology Tool   ".blue.bgGreen);
@@ -20,11 +30,11 @@ cipher
   .option('-F, --Frequency_analyze [value]', 'Analyze letter frequency.')
   .option('-m, --multiplicative [value]', 'Multiplicative Cipher')
   .option('-a, --affine [value]', 'Affine Cipher')
-  //.option('-k, --keyword [value]', 'Keyword Cipher')
   .option('-K, --Key [value]', 'Cipher Key')
   .option('-p, --playfair [value]', 'Playfair Cipher')
   .option('-H, --Hill [value]', 'Hill Cipher')
   .option('-v, --vigenere [value]', 'Vigenere Cipher')
+  .option('--ADFGX [value]', 'ADFGX Cipher')
   .parse(process.argv);
 
 var E = cipher.Encrypt;
@@ -39,19 +49,26 @@ if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A))
   // Simple Substitution
   if (cipher.simple_substitution)
   {
-    var simple = new Simple(cipher.Key,cipher.simple_substitution,mode);
+    var simple = new Simple(cipher.Key, cipher.simple_substitution, mode);
     simple.doConsole();
   }
   // --------------
 
-  if (cipher.multiplicative)
+  else if (cipher.multiplicative)
   {
-    if (cipher.Brute_Force){
+    if (cipher.Brute_Force)
+    {
       mode = 'b';
     }
-    var multi = new Multi(cipher.Key,cipher.multiplicative,mode);
+    var multi = new Multi(cipher.Key, cipher.multiplicative, mode);
     multi.doConsole();
-    //multi.testInput();
+  }
+
+  else if (cipher.ADFGX)
+  {
+    var adfgx = new ADFGX();
+    console.log("ADFGX");
+    console.log(adfgx.randomKey());
   }
 }
 else
