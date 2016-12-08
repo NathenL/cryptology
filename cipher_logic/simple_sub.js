@@ -15,22 +15,25 @@ var mode;
  * 'a' = Analyze
  * 'd' = Decrypt
  */
-function SimpleSub(k = "",t = "",m = 'a'){
+function SimpleSub(k = "", t = "", m = 'a')
+{
   this.key = k;
   this.text = t;
   this.mode = m;
 }
 
-SimpleSub.prototype.testInput = function(){
-  console.log("\nKEY: "+this.key);
-  console.log("TEXT "+this.text);
-  console.log("MODE: "+this.mode+"\n");
+SimpleSub.prototype.testInput = function()
+{
+  console.log("\nKEY: " + this.key);
+  console.log("TEXT " + this.text);
+  console.log("MODE: " + this.mode + "\n");
 }
 
 /**
  * Used only when running the Cryptology program via the console
  */
-SimpleSub.prototype.doConsole = function(){
+SimpleSub.prototype.doConsole = function()
+{
   console.log('Simple Substitution...');
 
   if (!this.key && (this.mode == 'd'))
@@ -83,87 +86,56 @@ SimpleSub.prototype.doConsole = function(){
  * Converts letters in the plain-text to a corresponding letter in the key.
  * @return {String}  Returns Cipher-Text
  */
-SimpleSub.prototype.encrypt = function(){
-    key = this.key.toLowerCase();
-    text = this.text.toLowerCase().split('');
+SimpleSub.prototype.encrypt = function()
+{
+  key = this.key.toLowerCase();
+  text = this.text.toLowerCase().split('');
 
-    var cipherbet = key.split('');
-    if (cipherbet.length == 26) {
+  var cipherbet = key.split('');
+  if (cipherbet.length == 26)
+  {
 
-      var cipher = "";
-      text.forEach(function(letter, index) {
-        if (letter.charCodeAt(0) < 97) {
-          cipher += letter;
-        } else {
-          cipher += cipherbet[letter.charCodeAt(0) - 97];
-        }
-      });
-      return cipher.toUpperCase();
-    } else {
-      console.log("(ERROR) Substitution `Alpha`bet is not 26 characters in length!"
-        .red);
-      return -1;
-    }
+    var cipher = "";
+    text.forEach(function(letter, index)
+    {
+      if (letter.charCodeAt(0) < 97)
+      {
+        cipher += letter;
+      }
+      else
+      {
+        cipher += cipherbet[letter.charCodeAt(0) - 97];
+      }
+    });
+    return cipher.toUpperCase();
+  }
+  else
+  {
+    console.log(
+      "(ERROR) Substitution `Alpha`bet is not 26 characters in length!"
+      .red);
+    return -1;
+  }
 }
 
 /**
  * Analyzes the Cipher-Text's letter frequencies.
  * @return {array}  Object with frequency of each letter.
  */
-SimpleSub.prototype.analyze = function(){
-    cipher_text = this.text.toLowerCase();
-    letter_count = [];
+SimpleSub.prototype.analyze = function()
+{
+  cipher_text = this.text.toLowerCase();
+  letter_count = [];
 
-    for (var i = 0; i < 26; i++) {
-      var count = (cipher_text.match(new RegExp(String.fromCharCode(97 + i), "g")) || [])
-        .length;
-      var letter = String.fromCharCode(97 + i);
-      //console.log(letter + " = " + count + "  " + Array(count+1).join("_".bgYellow.black));
-      letter_count[letter] = count;
-    }
+  for (var i = 0; i < 26; i++)
+  {
+    var count = (cipher_text.match(new RegExp(String.fromCharCode(97 + i),
+        "g")) || [])
+      .length;
+    var letter = String.fromCharCode(97 + i);
+    //console.log(letter + " = " + count + "  " + Array(count+1).join("_".bgYellow.black));
+    letter_count[letter] = count;
+  }
 
-    return letter_count;
+  return letter_count;
 }
-
-// exports.encrypt = (a, t) => encrypt(a, t);
-//
-// //Key must be a Substitution Alphabet
-// function encrypt(alpha, text) {
-//   alpha = alpha.toLowerCase();
-//   text = text.toLowerCase().split('');
-//
-//   var cipherbet = alpha.split('');
-//   if (cipherbet.length == 26) {
-//
-//     var cipher = "";
-//     text.forEach(function(letter, index) {
-//       if (letter.charCodeAt(0) < 97) {
-//         cipher += letter;
-//       } else {
-//         cipher += cipherbet[letter.charCodeAt(0) - 97];
-//       }
-//     });
-//     return cipher.toUpperCase();
-//   } else {
-//     console.log("(ERROR) Substitution Alphabet is not 26 characters in length!"
-//       .red);
-//     return -1;
-//   }
-// }
-//
-// exports.analyze = (c) => analyze(c);
-//
-// function analyze(cipher_text) {
-//   cipher_text = cipher_text.toLowerCase();
-//   letter_count = [];
-//
-//   for (var i = 0; i < 26; i++) {
-//     var count = (cipher_text.match(new RegExp(String.fromCharCode(97 + i), "g")) || [])
-//       .length;
-//     var letter = String.fromCharCode(97 + i);
-//     //console.log(letter + " = " + count + "  " + Array(count+1).join("_".bgYellow.black));
-//     letter_count[letter] = count;
-//   }
-//
-//   return letter_count;
-// }
