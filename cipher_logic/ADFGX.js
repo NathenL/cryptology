@@ -17,9 +17,21 @@ var mode;
  */
 function ADFGX(k = [], t = "", m = '')
 {
+  //this.key = (key == []) ? this.key = this.randomKey() : k;
   this.key = k;
   this.text = t;
   this.mode = m;
+}
+
+ADFGX.prototype.testInput = function()
+{
+  console.log("\nKEY: " + this.key);
+  console.log("TEXT " + this.text);
+  console.log("MODE: " + this.mode + "\n");
+}
+
+ADFGX.prototype.doConsole = function() {
+
 }
 
 /**
@@ -49,4 +61,9 @@ ADFGX.prototype.randomKey = function()
   }
 
   return key;
+}
+
+ADFGX.prototype.encrypt = function()
+{
+  var
 }
