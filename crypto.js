@@ -31,6 +31,7 @@ cipher
   .option('-m, --multiplicative [value]', 'Multiplicative Cipher')
   .option('-a, --affine [value]', 'Affine Cipher')
   .option('-K, --Key [value]', 'Cipher Key')
+  .option('--Key2 [value]', 'Second Key *if supported')
   .option('-p, --playfair [value]', 'Playfair Cipher')
   .option('-H, --Hill [value]', 'Hill Cipher')
   .option('-v, --vigenere [value]', 'Vigenere Cipher')
@@ -42,7 +43,7 @@ var D = cipher.Decrypt;
 var A = cipher.Analyze;
 var B = cipher.Brute_Force;
 
-if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A))
+if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A) || B)
 {
   var mode = (E && !D && !A) ? 'e' : ((!E && D && !A) ? 'd' : 'a');
 
@@ -66,9 +67,8 @@ if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A))
 
   else if (cipher.ADFGX)
   {
-    var adfgx = new ADFGX();
-    console.log("ADFGX");
-    console.log(adfgx.randomKey());
+    var adfgx = new ADFGX(cipher.Key, cipher.Key2, cipher.ADFGX, mode);
+    adfgx.doConsole();
   }
 }
 else
