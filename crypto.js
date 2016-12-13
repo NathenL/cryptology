@@ -67,6 +67,10 @@ if ((E && !D && !A) || (!E && D && !A) || (!E && !D && A) || B)
 
   else if (cipher.ADFGX)
   {
+    if (typeof(cipher.ADFGX) === "boolean"){
+      console.log("Please supply an input string.".red);
+      process.exit();
+    }
     var adfgx = new ADFGX(cipher.Key, cipher.Key2, cipher.ADFGX, mode);
     adfgx.doConsole();
   }
