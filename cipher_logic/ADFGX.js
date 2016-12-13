@@ -1,3 +1,4 @@
+
 module.exports = ADFGX;
 
 const Transposition = require('./transposition.js');
@@ -25,6 +26,10 @@ function ADFGX(k = "", k2 = "", t = "", m = '')
   this.mode = m.replace(/[^A-Z]/ig, "");
 }
 
+/**
+ * [setUpKey description]
+ * @param {[type]} keyString [description]
+ */
 ADFGX.prototype.setUpKey = function(keyString)
 {
   if (keyString.length != 25)
@@ -45,6 +50,10 @@ ADFGX.prototype.setUpKey = function(keyString)
   return key;
 }
 
+/**
+ * [testInput description]
+ * @return {[type]} [description]
+ */
 ADFGX.prototype.testInput = function()
 {
   console.log("\nKEY: " + this.key);
@@ -52,6 +61,10 @@ ADFGX.prototype.testInput = function()
   console.log("MODE: " + this.mode + "\n");
 }
 
+/**
+ * [doConsole description]
+ * @return {[type]} [description]
+ */
 ADFGX.prototype.doConsole = function()
 {
   console.log("ADFGX\n");
@@ -111,6 +124,10 @@ ADFGX.prototype.randomKey = function()
   return key;
 }
 
+/**
+ * [encrypt description]
+ * @return {[type]} [description]
+ */
 ADFGX.prototype.encrypt = function()
 {
   split_text = this.text.split('');
@@ -119,8 +136,16 @@ ADFGX.prototype.encrypt = function()
   {
     cipher += this.getEncryption(split_text[i]) + " ";
   }
-  var trans = new Transposition(this.key2, cipher, 'e');
-  cipher = trans.transpose();
+  if (this.key2.length <= 1){
+    console.log("Transposition key is not properly set. Transposition will not take place.".red);
+  }
+  else{
+    console.log(cipher);
+    var trans = new Transposition(this.key2, cipher, 'e');
+
+    //console.log(cipher);
+    console.log("D: "+trans.decryptByKey(this.key2,cipher = trans.encrypt()));
+  }
   return cipher;
 }
 
