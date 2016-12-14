@@ -1,12 +1,11 @@
-
 module.exports = ADFGX;
 
 const Transposition = require('./transposition.js');
 
-var key; // Encryption/Decryption Alphabet Square
+var key; // Encryption/Decryption Key Square
 var key2; // Transposition key
-var text;
-var mode;
+var text; // Cipher or Plain text
+var mode; // Selects weather to encrypt or decrypt the input
 
 /**
  * [ADFGX description]
@@ -90,9 +89,21 @@ ADFGX.prototype.doConsole = function()
 
   console.log("KEY: \t");
   console.log(this.key);
-  console.log("KEY2: " + (this.key2.yellow));
-  console.log("pt: " + (this.text.yellow));
-  console.log("CT: " + (this.encrypt().yellow));
+  console.log("KEYWORD: " + (this.key2.yellow));
+
+  if (this.mode == 'e')
+  {
+    console.log('Mode: ' + "Encrypt".yellow);
+    console.log("pt: " + (this.text.yellow));
+    console.log("CT: " + (this.encrypt().yellow));
+  }
+  else if (this.mode == 'd')
+  {
+    console.log('Mode: ' + "Decrypt".yellow);
+    console.log("CT: " + (this.text.yellow));
+    console.log("pt: " + (this.decrypt().yellow));
+  }
+
 }
 
 /**
@@ -136,15 +147,16 @@ ADFGX.prototype.encrypt = function()
   {
     cipher += this.getEncryption(split_text[i]) + " ";
   }
-  if (this.key2.length <= 1){
-    console.log("Transposition key is not properly set. Transposition will not take place.".red);
+  if (this.key2.length <= 1)
+  {
+    console.log(
+      "Transposition key is not properly set. Transposition will not take place."
+      .red);
   }
-  else{
-    console.log(cipher);
+  else
+  {
     var trans = new Transposition(this.key2, cipher, 'e');
-
-    //console.log(cipher);
-    console.log("D: "+trans.decryptByKey(this.key2,cipher = trans.encrypt()));
+    cipher = trans.encrypt();
   }
   return cipher;
 }
@@ -171,4 +183,26 @@ ADFGX.prototype.getEncryption = function(char)
   }
 
   return adfgx[r] + adfgx[c];
+}
+
+/**
+ * Decrypt ADFGX cipher. Must know key square and keyword
+ * @return {String} Plain Text
+ */
+ADFGX.prototype.decrypt = function()
+{
+  // Remove transposition
+  var trans = new Transposition();
+  var CT = trans.decryptByKey(this.key2, this.text);
+  var pt = "";
+  var adfgx = ['A', 'D', 'F', 'G', 'X'];
+
+  while (CT.length > 0)
+  {
+    var temp = CT.substring(0, 2);
+    CT = CT.substring(2, CT.length);
+    pt += this.key[adfgx.indexOf(temp[0])][adfgx.indexOf(temp[1])];
+  }
+
+  return pt.toLowerCase();
 }

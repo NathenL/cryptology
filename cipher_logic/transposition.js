@@ -26,7 +26,6 @@ function Transposition(k = "", t = "", m = '')
 
 Transposition.prototype.encrypt = function()
 {
-  console.log(this.text);
   temp_text = this.text.match(new RegExp('.{1,' + this.key.length + '}', 'g'));
   in_order = this.key.split('').sort();
   cipher = "";
@@ -34,7 +33,6 @@ Transposition.prototype.encrypt = function()
   for (var i = 0; i < this.key.length; i++)
   {
     index = this.key.indexOf(in_order[i]);
-    console.log(index + " | "+in_order[i]+ " | "+temp_text);
 
     for (var j = 0; j < temp_text.length; j++)
     {
@@ -50,26 +48,40 @@ Transposition.prototype.encrypt = function()
   return cipher;
 }
 
-Transposition.prototype.decryptByKey = function (key, cipher) {
-  console.log(cipher.replace(/\s/g,''));
-  temp_cipher = cipher.replace(/\s/g,'').match(new RegExp('.{1,' + key.length + '}', 'g'));
-  in_order = key.split('').sort();
-  text = "";
+/**
+ * [decryptByKey description]
+ * @param  {[type]} key    [description]
+ * @param  {[type]} cipher [description]
+ * @return {[type]}        [description]
+ */
+Transposition.prototype.decryptByKey = function(key, cipher)
+{
+  temp_cipher = cipher.replace(/\s/g, ''); // Copy of input text for doing work on
+  in_order = key.split('').sort(); // Key in alpha-numeric order
+  text = ""; // Return text
+  pt = new Array(); // Transposition table
+
+  /*
+    [grab] and [extra] are only used if the input cipher text did not include padding
+    such as when using an ADFGX cipher.
+   */
+  grab = Math.floor(temp_cipher.length / key.length);
+  extra = temp_cipher.length % key.length;
 
   for (var i = 0; i < key.length; i++)
   {
-    index = in_order.indexOf(key[i]);
-    console.log(index + " | "+key[i]+ " | "+temp_cipher);
-
-    for (var j = 0; j < temp_cipher.length; j++)
+    index = key.indexOf(in_order[i]);
+    pt[index] = (index < extra) ? temp_cipher.substring(0, grab + 1) :
+      temp_cipher.substring(0, grab);
+    temp_cipher = (index < extra) ? temp_cipher.substring(grab + 1,
+      temp_cipher.length) : temp_cipher.substring(grab, temp_cipher.length);
+  }
+  for (var i = 0; i <= key.length; i++)
+  {
+    for (var j = 0; j < pt.length; j++)
     {
-      if (temp_cipher[j][index] != null)
-      {
-        text += temp_cipher[j][index];
-      }
+      if (pt[j][i] != null) text += pt[j][i];
     }
-    text += " ";
-    //text += temp_text[in_order.indexOf(this.key[i])];
   }
 
   return text;
