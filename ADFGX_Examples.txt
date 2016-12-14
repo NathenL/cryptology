@@ -1,0 +1,18 @@
+Crypto.js input tests
+_____________________
+ADFGX
+
+Encrypt:
+1) node crypto.js --ADFGX "Attack at once" -E -K "BTALPDHOZKQFVSNGJCUXMREWY" --Key2 "cargo"
+	https://en.wikipedia.org/wiki/ADFGVX_cipher
+
+2) node crypto.js --ADFGX "Attack" -E -K "PHQGMEAYNOFDXKRCVSZWBUTIL" --Key2 "german"
+	http://practicalcryptography.com/ciphers/adfgx-cipher/
+
+3) node crypto.js --ADFGX "ambassadorshot" -E -K "SJMCEYNADZTHFGPLUOVXWBKRQ" --Key2 "CHARM"
+	http://www.cs.xu.edu/math/math316/09s/07ADFGX.pdf
+
+Decrypt:
+1) node crypto.js --ADFGX "FAXDF ADDDG DGFFF AFAX AFAFX" -D -K "BTALPDHOZKQFVSNGJCUXMREWY" --Key2 "cargo"
+2) node crypto.js --ADFGX "XFDDDDFAFGXG" -D -K "PHQGMEAYNOFDXKRCVSZWBUTIL" --Key2 "german"
+3) node crypto.js --ADFGX "AFDFFA DDAGAF FDAGAF XADGG FAFXD" -D -K "SJMCEYNADZTHFGPLUOVXWBKRQ" --Key2 "CHARM"
