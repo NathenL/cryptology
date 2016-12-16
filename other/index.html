@@ -3,55 +3,69 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="./transposition.js"></script>
   <script src="./ADFGX.js"></script>
-  <script>
-  var input = "";
-  var
-    jQuery(document).ready(function () {
-      $("#encypt").click(function (){ 
+  <script src="./index.js"></script>
 
-      });
-    });
-  </script>
+  <style>
+body {
+    background-color: linen;
+}
+
+h1 {
+    color: maroon;
+    margin-left: 40px;
+}
+h3 {
+  margin-left: 40px;
+}
+
+td, th, table input {
+ width: 30px;
+}
+</style>
 </head>
 <body style="margin:5px">
-  <div>
-    <table border="1" id="dataTable">
-        <tr>
-            <td>
-                <Strong>Text</Strong>
-            </td>
-            <td>
-                <Strong>Font</Strong>
-            </td>
-            <td>
-                <Strong>Size</Strong>
-            </td>
-            <td>
-                <Strong>Color</Strong>
-            </td>
-            <tr>
-                <td>
-                    <input type="Text">
-                </td>
-                <td>
-                    <input type="Text">
-                </td>
-                <td>
-                    <input type="Text">
-                </td>
-                <td>
-                    <input type="Text">
-                </td>
-            </tr>
-        </tr>
-    </table>
-    <textarea id="input"></textarea>
-  </div>
-  <input type="text"></input>
-  <span id="output"></span>
+  <h1>Cryptology</h1>
+  <h3>ADFGX Cipher tool</h3>
+
+  <table border="0" id="dataTable">
+      <tr>
+        <th></th>
+          <th>
+              A
+          </th>
+          <th>
+              D
+          </th>
+          <th>
+              F
+          </th>
+          <th>
+              G
+          </th>
+          <th>
+              X
+          </th>
+      </tr>
+  </table>
+  <input style="width:250px;margin-top:10px" type="text" id ="dataString"></input><br/>
+  <input style="margin-left: 55px; margin-top:10px" type="button" value ="Random Key Table" id="random"/>
+  <hr/>
+  <p>Cipher Text or Plain Text</p>
+  <textarea style="width: 300px; height:100px" id="input"></textarea>
+  <p>KeyWord</p>
+  <input type="text" id="keyWord"></input>
+  <hr/>
+  <p id="output"></p>
+  <hr/>
   <div class="buttons">
     <input type="button" value="Encrypt" id="encrypt"/>
     <input type="button" value ="Decrypt" id="decrypt"/>
+  </div>
+<hr/>
+  <div class="buttons">
+    <input type="button" value="Test1" id="t1"/>
+    <input type="button" value ="Test2" id="t2"/>
+    <input type="button" value ="Test3" id="t3"/>
   </div>
 </body>
 
