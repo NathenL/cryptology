@@ -1,4 +1,3 @@
-
 var key;
 var text;
 var mode;
@@ -69,6 +68,7 @@ Transposition.prototype.decryptByKey = function(key, cipher)
 
   for (var i = 0; i < key.length; i++)
   {
+
     index = key.indexOf(in_order[i]);
     pt[index] = (index < extra) ? temp_cipher.substring(0, grab + 1) :
       temp_cipher.substring(0, grab);
