@@ -46,7 +46,9 @@ jQuery(document).ready(function()
   {
     console.log("ENCRYPT");
     var key = jQuery("#dataString").val();
-    var keyword = jQuery("#keyWord").val().replace(/[^a-z]/gi, '');
+    var keyword = jQuery("#keyWord").val().replace(
+      /[^a-z]/gi, '').split('').reverse().join('').replace(
+      /(.)(?=.*\1)/g, "").split('').reverse().join('');
     var text = jQuery("#input").val().replace(/[^a-z]/gi, '');
     var adfgx = new ADFGX(key, keyword, text, 'd');
     adfgx.setUpKey(key);
@@ -58,7 +60,9 @@ jQuery(document).ready(function()
   {
     console.log("DECRYPT");
     var key = jQuery("#dataString").val();
-    var keyword = jQuery("#keyWord").val().replace(/[^a-z]/gi, '');
+    var keyword = jQuery("#keyWord").val().replace(
+      /[^a-z]/gi, '').split('').reverse().join('').replace(
+      /(.)(?=.*\1)/g, "").split('').reverse().join('');
     var text = jQuery("#input").val().replace(/[^a-z]/gi, '');
     var adfgx = new ADFGX(key, keyword, text, 'd');
     adfgx.setUpKey(key);
@@ -109,5 +113,13 @@ jQuery(document).ready(function()
     jQuery("#dataString").keyup();
     jQuery("#input").val("ambassadorshot");
     jQuery("#keyWord").val("charm");
+  });
+
+  jQuery("#t4").click(function()
+  {
+    jQuery("#dataString").val("UNAMOCVYWPGQKTEBLDSFXHJZR");
+    jQuery("#dataString").keyup();
+    jQuery("#input").val("this is a test of the adfgx system");
+    jQuery("#keyWord").val("cryptology");
   });
 });
