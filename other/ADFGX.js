@@ -1,4 +1,3 @@
-
 var key; // Encryption/Decryption Key Square
 var key2; // Transposition key
 var text; // Cipher or Plain text
@@ -43,6 +42,7 @@ ADFGX.prototype.setUpKey = function(keyString)
       key[i][key[i].indexOf('I')] = "J"; // Replace 'I' with 'J'
     }
   }
+  this.key = key;
   return key;
 }
 
@@ -53,7 +53,7 @@ ADFGX.prototype.setUpKey = function(keyString)
 ADFGX.prototype.testInput = function()
 {
   console.log("\nKEY: " + this.key);
-  console.log("KEYWORD: "+this.key2);
+  console.log("KEYWORD: " + this.key2);
   console.log("TEXT " + this.text);
   console.log("MODE: " + this.mode + "\n");
 }
