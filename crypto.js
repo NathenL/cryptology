@@ -1,12 +1,3 @@
-/*
-For one of the following ciphers, create software that given key and plaintext will encipher and
-that given key and ciphertext will decipher.
-ADFGX.
-Autokey extended by ciphertext.
-Columnar transposition -- rectangle is filled by padding if necessary.
-Two- or four-square Playfair.
-*/
-
 var cipher = require('commander');
 var colors = require('colors');
 const Simple = require('./cipher_logic/simple_sub.js');
